@@ -5,38 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg"
     tools:context=".MainActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/plateContainer"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_marginHorizontal="20dp"
-        app:helperText="Required"
-        app:helperTextTextColor="@android:color/holo_red_dark"
+   <ImageView
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_gravity="center"
+       android:layout_marginTop="100dp"
+       android:src="@drawable/logo"
+       />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/plateEditText"
-            android:background="@color/white"
-            android:textColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:lines="1"
-            android:hint="Placa"/>
-
-
-    </com.google.android.material.textfield.TextInputLayout>
-
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:layout_height="wrap_content">
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/createAccountButton"
-        android:layout_width="wrap_content"
+        android:id="@+id/consultVehicleButton"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Consultar placa"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/dark_blue"
+        android:text="Consultar situação do veículo"
         android:layout_marginTop="10dp"
         />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/createIrregularityButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/dark_blue"
+        android:text="Relatar irregularidade"
+        android:layout_marginTop="10dp"
+        />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/consultMapButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/dark_blue"
+        android:text="Consultar itinerário"
+        android:layout_marginTop="10dp"
+        />
+</LinearLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>
