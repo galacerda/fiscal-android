@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "324205080399",
+    "project_id": "projeto-integrador-ccf7b",
+    "storage_bucket": "projeto-integrador-ccf7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324205080399:android:8e8cd27cdd5881ae9d1f3a",
+        "android_client_info": {
+          "package_name": "com.example.fiscal_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324205080399-v0gu83d7tf0o9hlv9bk664n89fgi6hf7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGwFUNYPr7KbbhgXwbRfaJfYEbIKvO5L0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324205080399-v0gu83d7tf0o9hlv9bk664n89fgi6hf7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
