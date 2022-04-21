@@ -4,56 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/bg"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-   <ImageView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_gravity="center"
-       android:layout_marginTop="100dp"
-       android:src="@drawable/logo"
-       />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+
+        android:src="@drawable/logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_height="wrap_content">
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/consultVehicleButton"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/dark_blue"
-        android:text="Consultar situação do veículo"
-        android:layout_marginTop="10dp"
-        />
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/createIrregularityButton"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/dark_blue"
-        android:text="Relatar irregularidade"
-        android:layout_marginTop="10dp"
-        />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/consultVehicleButton"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/white"
+            android:text="Consultar situação do veículo"
+            android:textColor="@color/dark_blue" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createIrregularityButton"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/white"
+            android:text="Relatar irregularidade"
+            android:textColor="@color/dark_blue" />
 
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/consultMapButton"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/dark_blue"
-        android:text="Consultar itinerário"
-        android:layout_marginTop="10dp"
-        />
-</LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/consultMapButton"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/white"
+            android:text="Consultar itinerário"
+            android:textColor="@color/dark_blue" />
+    </LinearLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

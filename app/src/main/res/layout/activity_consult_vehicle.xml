@@ -5,37 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg2"
     tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/logo" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/plateContainer"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_marginHorizontal="20dp"
-        app:helperText="Required"
+        app:helperText="Preencha a placa"
         app:helperTextTextColor="@android:color/holo_red_dark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/plateEditText"
             android:background="@color/white"
-            android:textColor="@color/black"
+            android:textColor="@color/dark_blue"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:lines="1"
-            android:hint="Placa"/>
+            android:textSize="20dp"
+            />
 
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/createAccountButton"
+        android:id="@+id/consultPlateButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/dark_blue"
+        android:textSize="20dp"
         android:layout_gravity="center"
-        android:text="Consultar placa"
+        android:text="Consultar"
         android:layout_marginTop="10dp"
         />
 
