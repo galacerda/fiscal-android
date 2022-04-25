@@ -39,6 +39,30 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        app:cardBackgroundColor="@color/yellow"
+        android:visibility="gone"
+        android:layout_height="150dp">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/messageTextView"
+            android:textSize="20dp"
+            android:textColor="@color/dark_blue"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:text="Veiculo não regularizado"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        >
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/consultPlateButton"
         android:layout_width="wrap_content"
@@ -50,5 +74,36 @@
         android:text="Consultar"
         android:layout_marginTop="10dp"
         />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/firstButton"
+        android:layout_width="wrap_content"
+        android:maxWidth="150dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/dark_blue"
+        android:textSize="15dp"
+        android:layout_gravity="center"
+        android:text="Sim"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/secondButton"
+            android:layout_width="wrap_content"
+            android:maxWidth="150dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/dark_blue"
+            android:textSize="15dp"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:text="Não"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            />
+    </LinearLayout>
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>

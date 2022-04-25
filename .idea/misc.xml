@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Gabriel Lacerda/Documents/fiscal-android/app/src/main/res/drawable/ic_group_1__1_.xml" value="0.196" />
+        <entry key="..\:/Users/Gabriel Lacerda/Documents/fiscal-android/app/src/main/res/drawable/ic_group_1__2_.xml" value="0.196" />
+        <entry key="..\:/Users/Gabriel Lacerda/Documents/fiscal-android/app/src/main/res/layout/activity_consult_vehicle.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/Gabriel Lacerda/Documents/fiscal-android/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/Gabriel Lacerda/Documents/fiscal-android/app/src/main/res/layout/activity_register_irregularity.xml" value="0.358695652173913" />
+        <entry key="..\:/Users/Gabriel Lacerda/Documents/fiscal-android/app/src/main/res/layout/activity_take_picture.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/ga_la/AndroidStudioProjects/fiscalapp/app/src/main/res/layout/activity_consult_map.xml" value="0.1140625" />
         <entry key="..\:/Users/ga_la/AndroidStudioProjects/fiscalapp/app/src/main/res/layout/activity_consult_vehicle.xml" value="0.25" />
         <entry key="..\:/Users/ga_la/AndroidStudioProjects/fiscalapp/app/src/main/res/layout/activity_main.xml" value="0.18" />

@@ -29,6 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             android:backgroundTint="@color/white"
             android:text="Consultar situação do veículo"
             android:textColor="@color/dark_blue" />
@@ -39,6 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             android:backgroundTint="@color/white"
             android:text="Relatar irregularidade"
             android:textColor="@color/dark_blue" />
@@ -50,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             android:backgroundTint="@color/white"
             android:text="Consultar itinerário"
             android:textColor="@color/dark_blue" />
