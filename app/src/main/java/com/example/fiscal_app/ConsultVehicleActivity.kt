@@ -154,6 +154,7 @@ class ConsultVehicleActivity : AppCompatActivity() {
         binding.secondButton.text = "Não"
         binding.firstButton.setOnClickListener {
             val intent = Intent(this,RegisterIrregularityActivity::class.java)
+            intent.putExtra("plate",binding.plateEditText.text.toString())
             startActivity(intent)
         }
         binding.secondButton.setOnClickListener {
