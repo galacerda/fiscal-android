@@ -18,9 +18,11 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.FirebaseFunctionsException
 import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import com.google.firebase.storage.ktx.storage
 import com.google.gson.GsonBuilder
 import java.io.ByteArrayOutputStream
@@ -28,8 +30,8 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class RegisterIrregularityActivity : AppCompatActivity() {
-    private var images: Array<ShapeableImageView?> = arrayOf(null,null,null,null)
-    private var imageUrls: Array<String?> = arrayOf(null,null,null,null)
+    private var images: Array<ShapeableImageView?> = arrayOf(null, null, null, null)
+    private var imageUrls: Array<String?> = arrayOf(null, null, null, null)
     private lateinit var binding: ActivityRegisterIrregularityBinding
     private lateinit var image: ShapeableImageView
     private var plate: String = ""
@@ -37,6 +39,9 @@ class RegisterIrregularityActivity : AppCompatActivity() {
     private lateinit var functions: FirebaseFunctions
     private var type: String = "exceededTime"
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
+    private var isStarted: Boolean = false
+    private var isFinished: Boolean = false
+    private var uploadTasks:Array<UploadTask?> = arrayOf(null,null,null,null)
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,12 +57,11 @@ class RegisterIrregularityActivity : AppCompatActivity() {
 
         plate = intent.extras?.getString("plate").toString()
 
-        if(plate == "no-plate"){
+        if (plate == "no-plate") {
             binding.wrapperImgsLL.visibility = View.GONE
             binding.sendButton.visibility = View.GONE
             binding.wrapperOptions.visibility = View.VISIBLE
         }
-
         binding.imageOne.setOnClickListener {
             image = binding.imageOne
             images[0] = image
@@ -94,33 +98,71 @@ class RegisterIrregularityActivity : AppCompatActivity() {
         }
 
         binding.sendButtonOptionTwo.setOnClickListener {
-            type = "exceededTime"
-            var intent = Intent(this,ConsultVehicleActivity::class.java)
-            intent.putExtra("type","register")
+            var intent = Intent(this, ConsultVehicleActivity::class.java)
+            intent.putExtra("type", "register")
             startActivity(intent)
         }
-
     }
 
-    private val permission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-        if (!isGranted) {
-            Snackbar.make(
-                binding.root,
-                "Sem permissões para acessar a câmera",
-                Snackbar.LENGTH_INDEFINITE
-            ).show()
-        }
-    }
-
-    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result: ActivityResult ->
-        if(result.resultCode == Activity.RESULT_OK){
-            val uriImage = result.data?.data
-            image.setImageURI(uriImage)
+    override fun onPause(){
+        super.onPause()
+        if(isStarted){
+            uploadTasks[0]?.cancel()
+            uploadTasks[1]?.cancel()
+            uploadTasks[2]?.cancel()
+            uploadTasks[3]?.cancel()
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
+    override fun onResume() {
+        super.onResume()
+        if(isStarted && !isFinished){
+            AlertDialog.Builder(this).setTitle("Erro")
+                .setMessage("É necessário realizar o registro novamente, pois o processo foi interrompido.")
+                .setPositiveButton("Prosseguir") { _, _ ->
+
+                }.show()
+            for(item in imageUrls){
+                if(item != null) {
+                    val photoRef = Firebase.storage.getReferenceFromUrl(item as String)
+                    photoRef.delete().addOnFailureListener {
+                        Snackbar.make(
+                            binding.root,
+                            "Erro ao deletar imagens, refaça todo o processo!",
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            }
+            binding.progressBar.visibility = View.GONE
+            binding.sendButton.text = "Confirmar"
+            binding.sendButton.isEnabled = true
+        }
+    }
+
+    private val permission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (!isGranted) {
+                Snackbar.make(
+                    binding.root,
+                    "Sem permissões para acessar a câmera",
+                    Snackbar.LENGTH_INDEFINITE
+                ).show()
+            }
+        }
+
+    private val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val uriImage = result.data?.data
+                image.setImageURI(uriImage)
+            }
+        }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun uploadImage() {
+        isStarted = true
         for ((count, item) in images.withIndex()) {
             if (item != null) {
                 val current = LocalDateTime.now()
@@ -136,37 +178,41 @@ class RegisterIrregularityActivity : AppCompatActivity() {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
                 val data = baos.toByteArray()
 
-                val uploadTask = newImagesRef.putBytes(data)
-                uploadTask.addOnFailureListener {
+                uploadTasks[count] = newImagesRef.putBytes(data)
+                uploadTasks[count]?.addOnFailureListener {
                     Snackbar.make(
                         binding.root,
-                        "Erro ao inserir imagem",
+                        "Ops. Parece que aconteceu um problema aqui do nosso lado. Tente novamente. Se o problema persistir contate o suporte técnico pelo telefone 0800-000-0000",
                         Snackbar.LENGTH_INDEFINITE
                     ).show()
                     binding.sendButton.text = "Confirmar"
                     binding.sendButton.isClickable = true
                     binding.progressBar.visibility = View.GONE
-                }.addOnSuccessListener { taskSnapshot ->
+                }?.addOnSuccessListener { taskSnapshot ->
                     taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener {
                         imageUrls[count] = it.toString()
-                        if(count == 3){
+                        if (count == 3) {
                             registerIrregularity().addOnCompleteListener((OnCompleteListener { task ->
                                 binding.sendButton.isEnabled = true
                                 binding.progressBar.visibility = View.GONE
-                                if(!task.isSuccessful){
-                                    println(task.result)
-                                    AlertDialog.Builder(this).setTitle("Erro ao registrar irregularidade")
-                                        .setMessage("Ops. Parece que aconteceu um problema aqui do nosso lado. Tente novamente. Se o problema persistir contate o suporte técnico pelo telefone 0800-000-0000")
-                                        .setPositiveButton("Tentar novamente") { _, _ ->
-                                            //vai faze nada n
-                                        }.show()
+                                isFinished = true
+                                if (!task.isSuccessful) {
+                                    val e = task.exception
+                                    if (e is FirebaseFunctionsException) {
+                                        val message = e.message
+                                        AlertDialog.Builder(this).setTitle("Erro")
+                                            .setMessage(message.toString())
+                                            .setPositiveButton("Ok") { _, _ ->
+
+                                            }.show()
+                                    }
                                     binding.sendButton.text = "Confirmar"
-                                }else{
+                                } else {
                                     binding.cardView.visibility = View.VISIBLE
                                     binding.wrapperImgsLL.visibility = View.GONE
                                     binding.sendButton.text = "Menu"
-                                    binding.sendButton.setOnClickListener{
-                                        startActivity(Intent(this,MainActivity::class.java))
+                                    binding.sendButton.setOnClickListener {
+                                        startActivity(Intent(this, MainActivity::class.java))
                                     }
                                 }
                             }))
@@ -176,6 +222,7 @@ class RegisterIrregularityActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun registerIrregularity(): Task<String> {
         val data = hashMapOf(

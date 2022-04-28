@@ -1,19 +1,11 @@
 package com.example.fiscal_app
 
-import android.Manifest
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.telephony.TelephonyManager
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.example.fiscal_app.databinding.ActivityMainBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -24,14 +16,10 @@ import com.google.firebase.functions.FirebaseFunctionsException
 import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
 import com.google.gson.GsonBuilder
-import java.util.*
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var auth: FirebaseAuth
-
     private lateinit var functions: FirebaseFunctions
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
 
@@ -73,9 +61,9 @@ class MainActivity : AppCompatActivity() {
                 if(!task.isSuccessful){
                     val e = task.exception
                     if (e is FirebaseFunctionsException) {
-                        val details = e.details
-                        AlertDialog.Builder(this).setTitle("Erro").setMessage(details.toString()).setPositiveButton("Okay"){ _, _->
-                            //vai faze nada n
+                        val message = e.message
+                        AlertDialog.Builder(this).setTitle("Erro").setMessage(message.toString()).setPositiveButton("Ok"){ _, _->
+
                         }.show()
                     }
 
@@ -136,7 +124,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sendToConsultMapActivity(){
-        val intent = Intent(this,ConsultVehicleActivity::class.java)
+        val intent = Intent(this,ConsultMapActivity::class.java)
         startActivity(intent)
     }
 }

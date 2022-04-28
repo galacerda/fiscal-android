@@ -14,7 +14,6 @@ import androidx.appcompat.app.AlertDialog
 import com.example.fiscal_app.databinding.ActivityConsultVehicleBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.FirebaseFunctionsException
 import com.google.firebase.functions.ktx.functions
@@ -47,6 +46,7 @@ class ConsultVehicleActivity : AppCompatActivity() {
 
             if (isOnline(applicationContext)) {
                 if (plateHelperText == null) {
+                    binding.progressBar.visibility = View.VISIBLE
                     if (type == "register") {
                         val intent = Intent(this, RegisterIrregularityActivity::class.java)
                         intent.putExtra("plate", binding.plateEditText.text.toString())
@@ -54,12 +54,15 @@ class ConsultVehicleActivity : AppCompatActivity() {
                     } else {
                         consultPlate(binding.plateEditText.text.toString()).addOnCompleteListener(
                             (OnCompleteListener { task ->
+                                binding.progressBar.visibility = View.GONE
                                 if (!task.isSuccessful) {
-                                    AlertDialog.Builder(this).setTitle("Erro ao consultar")
-                                        .setMessage("Ops. Parece que aconteceu um problema aqui do nosso lado. Tente novamente. Se o problema persistir contate o suporte técnico pelo telefone 0800-000-0000")
-                                        .setPositiveButton("Tentar novamente") { _, _ ->
-                                            //vai faze nada n
+                                    val e = task.exception
+                                    if (e is FirebaseFunctionsException) {
+                                        val message = e.message
+                                        AlertDialog.Builder(this).setTitle("Erro").setMessage(message.toString()).setPositiveButton("Ok"){ _, _->
+
                                         }.show()
+                                    }
                                 } else {
                                     println(task.result)
                                     val result =
