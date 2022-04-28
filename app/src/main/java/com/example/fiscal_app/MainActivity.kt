@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             binding.createIrregularityButton.visibility = View.VISIBLE
         }else{
             val deviceId = getDeviceId()
-            println(deviceId)
+            println("este é o seu deviceId: " + deviceId)
             if(deviceId != null){
             getAuthUser(deviceId).addOnCompleteListener((OnCompleteListener { task ->
                 if(!task.isSuccessful){

@@ -21,19 +21,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageOne"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="148dp"
+                android:layout_height="123dp"
                 android:layout_marginRight="10dp"
                 app:srcCompat="@drawable/img_new"
                 />
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageTwo"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginRight="10dp"
+                android:layout_width="148dp"
+                android:layout_height="123dp"
                 app:srcCompat="@drawable/img_new"
                 />
         </LinearLayout>
@@ -45,16 +45,15 @@
             android:orientation="horizontal">
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageThree"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="148dp"
+                android:layout_height="123dp"
                 android:layout_marginRight="10dp"
                 app:srcCompat="@drawable/img_new"
                 />
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageFour"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginRight="10dp"
+                android:layout_width="148dp"
+                android:layout_height="123dp"
                 app:srcCompat="@drawable/img_new"
                 />
         </LinearLayout>
@@ -87,7 +86,7 @@
             android:backgroundTint="@color/yellow"
             android:textColor="@color/dark_blue"
             android:layout_width="match_parent"
-            android:layout_height="90dp"/>
+            android:layout_height="120dp"/>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sendButtonOptionTwo"
             android:text="Veiculo com tempo vencido"
@@ -97,7 +96,7 @@
             android:backgroundTint="@color/yellow"
             android:textColor="@color/dark_blue"
             android:layout_width="match_parent"
-            android:layout_height="90dp"/>
+            android:layout_height="120dp"/>
     </LinearLayout>
 
     <com.google.android.material.card.MaterialCardView

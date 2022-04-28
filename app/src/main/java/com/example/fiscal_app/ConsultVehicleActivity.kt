@@ -48,6 +48,7 @@ class ConsultVehicleActivity : AppCompatActivity() {
                 if (plateHelperText == null) {
                     binding.progressBar.visibility = View.VISIBLE
                     if (type == "register") {
+                        binding.progressBar.visibility = View.GONE
                         val intent = Intent(this, RegisterIrregularityActivity::class.java)
                         intent.putExtra("plate", binding.plateEditText.text.toString())
                         startActivity(intent)
@@ -64,13 +65,11 @@ class ConsultVehicleActivity : AppCompatActivity() {
                                         }.show()
                                     }
                                 } else {
-                                    println(task.result)
                                     val result =
                                         gson.fromJson(
                                             task.result,
                                             FunctionsGenericResponse::class.java
                                         )
-                                    println(result.payload.toString())
                                     val payload = gson.fromJson(
                                         result.payload.toString(),
                                         GenericConsultResponse::class.java
@@ -86,6 +85,7 @@ class ConsultVehicleActivity : AppCompatActivity() {
                     }
                 }
             } else {
+                binding.progressBar.visibility = View.GONE
                 AlertDialog.Builder(this).setTitle("Problemas na conexão")
                     .setMessage("Sem conexão com a internet")
                     .setPositiveButton("Tentar novamente") { _, _ ->
