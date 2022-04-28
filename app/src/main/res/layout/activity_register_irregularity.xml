@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg"
     android:gravity="center"
+    android:padding="20dp"
     android:orientation="vertical"
     tools:context=".RegisterIrregularityActivity">
 
     <LinearLayout
+        android:id="@+id/wrapperImgsLL"
         android:layout_width="wrap_content"
         android:background="@color/yellow"
         android:orientation="vertical"
@@ -19,20 +21,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageOne"
-                android:layout_width="140dp"
-                android:layout_height="200dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginRight="10dp"
-                app:srcCompat="@drawable/ic_group_1__2_"
+                app:srcCompat="@drawable/img_new"
                 />
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageTwo"
-                android:layout_width="140dp"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/ic_group_1__2_"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/img_new"
                 />
         </LinearLayout>
 
@@ -43,26 +45,91 @@
             android:orientation="horizontal">
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageThree"
-                android:layout_width="140dp"
-                android:layout_height="200dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginRight="10dp"
-                app:srcCompat="@drawable/ic_group_1__2_"
+                app:srcCompat="@drawable/img_new"
                 />
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageFour"
-                android:layout_width="140dp"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/ic_group_1__2_"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/img_new"
                 />
         </LinearLayout>
-
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/wrapperOptions"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_height="wrap_content">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/chooseOptionTextView"
+            android:textSize="20dp"
+            android:textColor="@color/dark_blue"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:text="Escolha uma opção"
+            android:layout_height="wrap_content"/>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sendButtonOptionOne"
+            android:text=" Veiculo estacionado em vaga proibida ou inadequada"
+            android:textSize="15dp"
+            android:padding="20dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/yellow"
+            android:textColor="@color/dark_blue"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sendButtonOptionTwo"
+            android:text="Veiculo com tempo vencido"
+            android:textSize="15dp"
+            android:padding="20dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/yellow"
+            android:textColor="@color/dark_blue"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"/>
+    </LinearLayout>
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:visibility="gone"
+        app:cardBackgroundColor="@color/yellow"
+        android:layout_height="150dp">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/messageTextView"
+            android:textSize="20dp"
+            android:textColor="@color/dark_blue"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:text="Registro de irregularidade realizado com sucesso..."
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/uploadImage"
-        android:text="Enviar imagens"
+        android:id="@+id/sendButton"
+        android:text="Confimar"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/white"
+        android:textColor="@color/dark_blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true" />
 </androidx.appcompat.widget.LinearLayoutCompat>

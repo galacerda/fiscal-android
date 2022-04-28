@@ -131,6 +131,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun sendToRegisterIrregularityActivity(){
         val intent = Intent(this,RegisterIrregularityActivity::class.java)
+        intent.putExtra("plate","no-plate")
         startActivity(intent)
     }
 

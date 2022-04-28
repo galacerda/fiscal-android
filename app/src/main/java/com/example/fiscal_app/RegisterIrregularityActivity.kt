@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.ActivityResult
 import androidx.annotation.RequiresApi
@@ -31,9 +32,10 @@ class RegisterIrregularityActivity : AppCompatActivity() {
     private var imageUrls: Array<String?> = arrayOf(null,null,null,null)
     private lateinit var binding: ActivityRegisterIrregularityBinding
     private lateinit var image: ShapeableImageView
-    private lateinit var plate: String
+    private var plate: String = ""
     private lateinit var storage: FirebaseStorage
     private lateinit var functions: FirebaseFunctions
+    private var type: String = "exceededTime"
     private val gson = GsonBuilder().enableComplexMapKeySerialization().create()
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -49,6 +51,12 @@ class RegisterIrregularityActivity : AppCompatActivity() {
         permission.launch(android.Manifest.permission.CAMERA)
 
         plate = intent.extras?.getString("plate").toString()
+
+        if(plate == "no-plate"){
+            binding.wrapperImgsLL.visibility = View.GONE
+            binding.sendButton.visibility = View.GONE
+            binding.wrapperOptions.visibility = View.VISIBLE
+        }
 
         binding.imageOne.setOnClickListener {
             image = binding.imageOne
@@ -71,10 +79,27 @@ class RegisterIrregularityActivity : AppCompatActivity() {
             startForResult.launch(Intent(this, TakePictureActivity::class.java))
         }
 
-        binding.uploadImage.setOnClickListener {
+        binding.sendButton.setOnClickListener {
             uploadImage()
-            println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaporaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+            binding.sendButton.text = "Registrando irregularidade"
+            binding.sendButton.isEnabled = false
+            binding.progressBar.visibility = View.VISIBLE
         }
+
+        binding.sendButtonOptionOne.setOnClickListener {
+            type = "notPark"
+            binding.wrapperImgsLL.visibility = View.VISIBLE
+            binding.sendButton.visibility = View.VISIBLE
+            binding.wrapperOptions.visibility = View.GONE
+        }
+
+        binding.sendButtonOptionTwo.setOnClickListener {
+            type = "exceededTime"
+            var intent = Intent(this,ConsultVehicleActivity::class.java)
+            intent.putExtra("type","register")
+            startActivity(intent)
+        }
+
     }
 
     private val permission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
@@ -99,7 +124,6 @@ class RegisterIrregularityActivity : AppCompatActivity() {
         for ((count, item) in images.withIndex()) {
             if (item != null) {
                 val current = LocalDateTime.now()
-
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
                 val formatted = current.format(formatter)
                 val storageRef = storage.reference
@@ -119,11 +143,16 @@ class RegisterIrregularityActivity : AppCompatActivity() {
                         "Erro ao inserir imagem",
                         Snackbar.LENGTH_INDEFINITE
                     ).show()
+                    binding.sendButton.text = "Confirmar"
+                    binding.sendButton.isClickable = true
+                    binding.progressBar.visibility = View.GONE
                 }.addOnSuccessListener { taskSnapshot ->
                     taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener {
                         imageUrls[count] = it.toString()
                         if(count == 3){
                             registerIrregularity().addOnCompleteListener((OnCompleteListener { task ->
+                                binding.sendButton.isEnabled = true
+                                binding.progressBar.visibility = View.GONE
                                 if(!task.isSuccessful){
                                     println(task.result)
                                     AlertDialog.Builder(this).setTitle("Erro ao registrar irregularidade")
@@ -131,8 +160,14 @@ class RegisterIrregularityActivity : AppCompatActivity() {
                                         .setPositiveButton("Tentar novamente") { _, _ ->
                                             //vai faze nada n
                                         }.show()
+                                    binding.sendButton.text = "Confirmar"
                                 }else{
-                                    println(task.result)
+                                    binding.cardView.visibility = View.VISIBLE
+                                    binding.wrapperImgsLL.visibility = View.GONE
+                                    binding.sendButton.text = "Menu"
+                                    binding.sendButton.setOnClickListener{
+                                        startActivity(Intent(this,MainActivity::class.java))
+                                    }
                                 }
                             }))
                         }
@@ -140,11 +175,7 @@ class RegisterIrregularityActivity : AppCompatActivity() {
                 }
             }
         }
-
-
     }
-
-
 
     private fun registerIrregularity(): Task<String> {
         val data = hashMapOf(
@@ -153,6 +184,7 @@ class RegisterIrregularityActivity : AppCompatActivity() {
             "imageTwo" to imageUrls[1],
             "imageThree" to imageUrls[2],
             "imageFour" to imageUrls[3],
+            "type" to type
         )
         return functions
             .getHttpsCallable("registerIrregularity")
